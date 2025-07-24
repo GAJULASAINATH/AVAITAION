@@ -4,25 +4,29 @@ import "dotenv/config.js";
 import { connectDB } from "../src/lib/db.js";
 import cookieParser from "cookie-parser";
 import authRoutes from '../src/routes/authRoutes.js';
+import searchRoutes from '../src/routes/searchRoutes.js';
+import bookingRoutes from '../src/routes/bookingRoutes.js';
 
-//app initialize 
+//APP INSTANTIATION
 const app = express();
 const PORT = process.env.PORT;
 
-//middlewares
+//MIDDLEWARES
 app.use(express.json());
 app.use(cookieParser());
 
-//routes
+//ROUTES
 app.use('/auth',authRoutes)
+app.use('/api', searchRoutes);
+app.use('/api', bookingRoutes);
 
-//server setup 
+//SERVER SETUP 
 app.listen(PORT, () => {
   console.log(`Node Server: http://localhost:${PORT}`);
   connectDB();
 });
 
-//
+//HOME
 app.get('/',(req,res)=>{
   res.status(200).json({message:"BACKEND ENVIRONMENT OF AVAITAION"})
 })
